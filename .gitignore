@@ -1,5 +1,7 @@
-./aboobyclient.js
-./testing.js
+aboobyclient.js
+testing.js
 testImages/
-./TODO.txt
-./TOFIX.txt
+TODO.txt
+TOFIX.txt
+.replit
+replit.nix
