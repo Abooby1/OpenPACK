@@ -15,10 +15,7 @@ export class User {
 	async __redefineData() {
 		let data = await this.__user;
 		try {
-			this.__user = {
-				status: data[0],
-				data: JSON.parse(data[1])
-			};
+			this.__user = typeof this.__user == 'string'?JSON.parse(data[1]):data;
 			
 			this.__init = true;
 			return this.__user;
@@ -27,57 +24,57 @@ export class User {
 		}
 	}
 	get id() {
-		if(!this.__init) return 'UserData isnt initialized.';
+		if(!this.__init) return 'Data isnt initialized.';
 
 		return this.__user._id;
 	}
 	get name() {
-		if(!this.__init) return 'UserData isnt initialized.';
+		if(!this.__init) return 'Data isnt initialized.';
 
 		return this.__user.User;
 	}
 	get created() {
-		if(!this.__init) return 'UserData isnt initialized.';
+		if(!this.__init) return 'Data isnt initialized.';
 
 		return this.__user.CreationTime;
 	}
 	get picture() {
-		if(!this.__init) return 'UserData isnt initialized.';
+		if(!this.__init) return 'Data isnt initialized.';
 
 		return `${PhotopConfig.assets}ProfileImages/${this.__user.Settings.ProfilePic}`;
 	}
 	get banner() {
-		if(!this.__init) return 'UserData isnt initialized.';
+		if(!this.__init) return 'Data isnt initialized.';
 
 		return `${PhotopConfig.assets}ProfileBanners/${this.__user.Settings.ProfileBanner}`;
 	}
 	get followerCount() {
-		if(!this.__init) return 'UserData isnt initialized.';
+		if(!this.__init) return 'Data isnt initialized.';
 
 		return this.__user.ProfileData.Followers;
 	}
 	get followingCount() {
-		if(!this.__init) return 'UserData isnt initialized.';
+		if(!this.__init) return 'Data isnt initialized.';
 
 		return this.__user.ProfileData.Following;
 	}
 	get bio() {
-		if(!this.__init) return 'UserData isnt initialized.';
+		if(!this.__init) return 'Data isnt initialized.';
 
 		return this.__user.ProfileData.Description;
 	}
 	get visibility() {
-		if(!this.__init) return 'UserData isnt initialized.';
+		if(!this.__init) return 'Data isnt initialized.';
 
 		return this.__user.ProfileData.Visibility;
 	}
 	get pinnedPost() {
-		if(!this.__init) return 'UserData isnt initialized.';
+		if(!this.__init) return 'Data isnt initialized.';
 
 		return this.__user.ProfileData.PinnedPost;
 	}
 	get status() {
-		if(!this.__init) return 'UserData isnt initialized.';
+		if(!this.__init) return 'Data isnt initialized.';
 
 		return {
 			raw: this.__user.Status,
@@ -91,7 +88,7 @@ export class User {
 		}
 	}
 	get roles() {
-		if(!this.__init) return 'UserData isnt initialized.';
+		if(!this.__init) return 'Data isnt initialized.';
 		let roles = this.__user.Role;
 
 		if(typeof roles == 'string') {
@@ -167,9 +164,29 @@ export class User {
 			}
 		})
 	}
-}
-export class GivenDataUser {
-	constructor(data) {
+
+	async inviteTo(groupid) {
+		//
+	}
+	
+	async groupKick() {
+		//
+	}
+	async groupBan() {
+		//
+	}
+
+	async ban() {
+		//
+	}
+	async unban() {
+		//
+	}
+	async report() {
+		//
+	}
+
+	async onFollow(callback) {
 		//
 	}
 }

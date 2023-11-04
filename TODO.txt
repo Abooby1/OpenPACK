@@ -6,15 +6,17 @@ For inner objects, to be used within the module for development purposes, prefix
 RESOURCES:
 * Photop API: https://photop.docs.apiary.io/
 * Bot Form: https://docs.google.com/forms/d/e/1FAIpQLSfphZMvTNPCI0yicT9js0Nty8EFybjoOiKCKkk2FtZ1dTOQXQ/viewform
-* aboobyclient.js: A little help on the syntax and what to do
+* [file] aboobyclient.js: A little help on the syntax and what to do
 
 ----
 
 * Client class
-* User class (seems done)
-* Post class
-* Chat class
+* User class (done)
+* Post class (done)
+* Chat class (in progress)
 * Group class
+* Listeners
+* OpenPACK Stats: Keeps stats of every bot (chats, posts, logins, etc) and have a site where you can see the stats of your bot
 * Any extra features from aboobyclient
 
 After 50-70 percent done:

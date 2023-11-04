@@ -15,6 +15,7 @@
 		"axios": "^1.6.0",
 		"es7-sleep": "^1.0.0",
 		"form-data": "^4.0.0",
+		"FormData": "^0.10.1",
 		"node-fetch": "^3.2.6",
 		"simple-json-db": "^2.0.0",
 		"simple-socket-js": "^2.1.20"

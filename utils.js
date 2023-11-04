@@ -4,8 +4,10 @@ import SimpleSocket from "simple-socket-js"
 import fs from 'fs'
 import sleep from "es7-sleep"
 import JSONdb from "simple-json-db"
-import {ClientAuth} from './photopclient.js'
+import {ClientAuth} from './OpenPACK.js'
+import * as Classes from './classes/index.js'
 
+export var chatListeners = new Object()
 export const PhotopConfig = {
 	assets: 'https://photop-content.s3.amazonaws.com/',
 	server: 'https://photop.exotek.co/'
@@ -65,4 +67,72 @@ export function formatRoles(roleArr) {
 }
 export function getImage(postid, imageNum) {
   return `${PhotopConfig.assets}PostImages/${postid}${imageNum}`;
+}
+
+export var connectedPosts = {
+	normal: new Array(),
+	postListen: {
+		listen: null,
+		posts: new Array()
+	},
+	group: new Object()
+}
+export async function initListener(type, data) {
+	if(type == 'chat') {
+		chatListeners[data.postid] = data.callback;
+		
+		if(data.groupid) {
+			if(connectedPosts.group[data.groupid]) {
+				connectedPosts.group[data.groupid].push(data.postid)
+			} else {
+				connectedPosts.group[data.groupid] = [data.postid];
+			}
+
+			if(connectedPosts.group[data.groupid].length == 25) {
+				connectedPosts.group[data.groupid].splice(0,1)
+			}
+
+			let [code, response] = await sendRequest(`chats/connect?groupid=${data.groupid}`, 'POST', {
+				ssid: socket.secureID,
+				connect: connectedPosts.group[data.groupid]
+			})
+			return;
+		}
+
+		connectedPosts.normal.push(data.postid)
+		if(connectedPosts.normal.length == 25) {
+			connectedPosts.normal.splice(0,1)
+		}
+
+		let [code, response] = await sendRequest('chats/connect', 'POST', {
+			ssid: socket.secureID,
+			connect: connectedPosts.normal
+		})
+	} else if(type == 'post') {
+		if(connectedPosts.postListen.listen) {
+			connectedPosts.postListen.listen.edit(query)
+		} else {
+			connectedPosts.postListen.listen = socket.subscribe({
+				task: 'post',
+				_id: connectedPosts.postListen.posts
+			}, function(data) {
+				//
+			})
+		}
+	}
+}
+
+socket.remotes.stream = async function(response) {
+	switch(response.type) {
+		case 'chat':
+			let chat = response.chat;
+
+			if(chatListeners[chat.PostID]) {
+				let chatClass = new Classes.Chat(chat._id, chat.PostID, chat.GroupID)
+
+				await chatClass.__redefineData()
+				chatListeners[chat.PostID](chatClass)
+			}
+			break;
+	}
 }
