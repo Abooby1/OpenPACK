@@ -4,7 +4,7 @@ import SimpleSocket from "simple-socket-js"
 import fs from 'fs'
 import sleep from "es7-sleep"
 import JSONdb from "simple-json-db"
-import {ClientAuth} from './OpenPACK.js'
+import {ClientAuth} from './index.js'
 import * as Classes from './classes/index.js'
 
 export var chatListeners = new Object()

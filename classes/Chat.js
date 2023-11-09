@@ -63,7 +63,7 @@ export class Chat {
     return new Promise(async (res, rej) => {
 			let [code, response] = await sendRequest(`chats/new?postid=${this.__postid}`, 'POST', {
 				text,
-				replyID: this.__id;
+				replyID: this.__id
 			});
 
 			res(response)
